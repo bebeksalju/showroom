@@ -1,0 +1,50 @@
+{% load rupiah_format %}
+
+<h1>{{ mobil.merk }} {{ mobil.model }}</h1>
+<p>
+    <strong>Tahun:</strong> {{ mobil.tahun }}<br>
+    <strong>Harga:</strong> {{ mobil.harga_dasar|rupiah }}<br>
+</p>
+
+<hr>
+
+<h2>Perhitungan Keuangan</h2>
+<p>Total Biaya Service: {% if mobil.total_biaya_service %}{{ mobil.total_biaya_service|rupiah }}{% else %}Rp.-{% endif %}</p>
+<p>HPP: {{ mobil.hpp|rupiah }}</p>
+{% if mobil.pinjaman_bank %}
+    <p>Cicilan Bulanan (5 tahun): {{ mobil.cicilan_bulanan|rupiah }}</p>
+{% endif %}
+
+<hr>
+
+<h2>Riwayat Servis</h2>
+{% if services %}  <!-- Cek apakah ada servis -->
+    <table class="table" border="1" cellpadding="5" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Deskripsi</th>
+                <th>Biaya</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in services %}
+            <tr>
+                <td>{{ service.tanggal_service|date:"d M Y" }}</td>
+                <td>{{ service.deskripsi }}</td>
+                <td>{{ service.biaya_service|rupiah }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="text-muted">Belum ada riwayat servis.</p>
+{% endif %}
+
+<a href="{% url 'tambah_service' mobil.id %}">( Tambah Riwayat Service )</a>
+
+<hr>
+
+<a href="{% url 'edit_mobil' mobil.id %}">( Edit Mobil )</a>  <b>|</b>  
+<a href="{% url 'daftar_mobil' %}">( Kembali ke Daftar Mobil )</a>  <b>|</b>
+<a href="{% url 'hapus_mobil' mobil.id %}" style="color:red">( Hapus Mobil )</a>  <b>|</b>

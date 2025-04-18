@@ -1,0 +1,74 @@
+<h1>Edit Mobil {{mobil.merk}} {{mobil.model}}</h1>
+<quote style="border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">
+    Silakan isi informasi mobil baru di bawah ini.
+</quote>
+<br><br>
+<a href="#" onclick="alert('Untuk Harga, Pinjaman Bank, Suku Bunga tidak perlu menulis koma (,) atau titik (.) pada angka.\nMisal: 2000000000 untuk Rp2.000.000.000')">Wajib dibaca!</a>
+<form method="post" id="mobil-form">
+    {% csrf_token %}
+    
+    <!-- Data Dasar Mobil -->
+    <div class="form-group">
+        {{ form.merk.label_tag }} {{ form.merk }}
+    </div>
+    
+    <div class="form-group">
+        {{ form.model.label_tag }} {{ form.model }}
+    </div>
+
+    <div class="form-group">
+        {{ form.tahun.label_tag }} {{ form.tahun }}
+    </div>
+
+    <div class="form-group">
+        {{ form.harga_dasar.label_tag }} {{ form.harga_dasar }}
+    </div>
+
+    <div class="form-group">
+        <label>
+            {{ form.menggunakan_bank }} Gunakan Pembiayaan Bank?
+        </label>
+    </div>
+    
+    <!-- Field Bank (Awalnya Disembunyikan) -->
+    <div id="bank-fields" style="display: none;">
+        <div class="form-group">
+            {{ form.pinjaman_bank.label_tag }} 
+            {{ form.pinjaman_bank }}
+        </div>
+        <div class="form-group">
+            {{ form.suku_bunga.label_tag }} 
+            {{ form.suku_bunga }}
+            <small class="text-muted">Dalam persen (contoh: 10 untuk 10%)</small>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="{% url 'daftar_mobil' %}" class="btn btn-secondary">Batal</a>
+</form>
+
+<script>
+    // Tunggu sampai DOM siap
+    document.addEventListener('DOMContentLoaded', function() {
+        const bankToggle = document.querySelector('input[name="menggunakan_bank"]');
+        const bankFields = document.getElementById('bank-fields');
+        
+        if (bankToggle && bankFields) {
+            // Handler untuk perubahan checkbox
+            bankToggle.addEventListener('change', function() {
+                bankFields.style.display = this.checked ? 'block' : 'none';
+                
+                // Set required fields
+                document.getElementById('id_pinjaman_bank').required = this.checked;
+                document.getElementById('id_suku_bunga').required = this.checked;
+            });
+            
+            // Inisialisasi awal
+            bankFields.style.display = bankToggle.checked ? 'block' : 'none';
+        } else {
+            console.error('Elemen tidak ditemukan!');
+        }
+    });
+</script>
+
+<a href="{% url 'daftar_mobil' %}">Kembali ke Daftar Mobil</a>

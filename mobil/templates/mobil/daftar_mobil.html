@@ -1,0 +1,36 @@
+{% load rupiah_format %}
+
+<h1>Daftar Mobil MadagasCars Showroom</h1>
+<hr>
+<a href="{% url 'tambah_mobil' %}">( Tambah Mobil )</a>
+<br><br>
+
+<table border="1" cellpadding="5" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Merk</th>
+            <th>Model</th>
+            <th>Tahun</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for mobil in mobil_list %}
+        <tr>
+            <td>{{ mobil.id }}</td>
+            <td>{{ mobil.merk }}</td>
+            <td>{{ mobil.model }}</td>
+            <td>{{ mobil.tahun }}</td>
+            <td style="text-align: center;">
+                <a href="{% url 'detail_mobil' mobil.id %}">Detail</a> |
+                <a href="{% url 'edit_mobil' mobil.id %}">Edit</a> |
+                <a href="{% url 'hapus_mobil' mobil.id %}" style="color:red">Hapus</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">Tidak ada data mobil.</td>
+        </tr>
+        {% endfor %}
+</table>
