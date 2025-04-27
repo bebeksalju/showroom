@@ -16,7 +16,3 @@ POST /<mobil_id>/hapus/ # Hapus mobil
 
 ## Database
 Menggunakan SQLite untuk menyimpan data (bawaan Django).
-
-Nama: Kurnia Hansen H. S.
-
-NB: Dengan ini saya berharap agar bisa diterima dan dapat mengembangkan skill dan memberikan kontribusi terbaik saya untuk kemajuan perusahaan. Terima kasih atas perhatian dan kesempatan yang diberikan.
